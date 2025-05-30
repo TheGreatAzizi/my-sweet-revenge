@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Resources - FREEMEDIAHECKYEAH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #191919;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #2a2a2a;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        header h1 {
+            font-size: 1.5em;
+            color: #9b59b6;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        nav ul li a {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #9b59b6;
+        }
+        #filter-container {
+            text-align: center;
+            padding: 20px;
+            background-color: #1f1f1f;
+            margin: 20px 0;
+        }
+        #category {
+            padding: 10px;
+            font-size: 1em;
+            background-color: #2a2a2a;
+            color: #ffffff;
+            border: 1px solid #9b59b6;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        #filter-btn {
+            padding: 10px 20px;
+            background-color: #9b59b6;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        #filter-btn:hover {
+            background-color: #7a437d;
+        }
+        #resource-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .resource-card {
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+        }
+        .resource-card h3 {
+            font-size: 1.3em;
+            color: #9b59b6;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .resource-card p {
+            font-size: 0.9em;
+            color: #cccccc;
+            margin-bottom: 15px;
+        }
+        .resource-card a {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #9b59b6;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+        .resource-card a:hover {
+            background-color: #7a437d;
+        }
+        .warning {
+            color: #ff4d4d;
+            font-size: 0.85em;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .starred, .index {
+            font-size: 1.2em;
+        }
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            #resource-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Sweet Revenge</h1>
+        <nav>
+            <ul>
+                <li><a href="https://github.com/TheGreatAzizi">Azizi</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="filter-container">
+        <select id="category">
+            <option value="all">All Categories</option>
+            <option value="Streaming Sites">Streaming Sites</option>
+            <option value="Free with Ads">Free with Ads</option>
+            <option value="Anime Streaming">Anime Streaming</option>
+            <option value="Cartoon Streaming">Cartoon Streaming</option>
+            <option value="TV Streaming">TV Streaming</option>
+            <option value="Drama Streaming">Drama Streaming</option>
+            <option value="Specialty Streaming">Specialty Streaming</option>
+            <option value="Educational Streaming">Educational Streaming</option>
+            <option value="Live TV">Live TV</option>
+            <option value="Live Sports">Live Sports</option>
+            <option value="Sports Replays">Sports Replays</option>
+            <option value="IPTV Tools">IPTV Tools</option>
+            <option value="Android TV">Android TV</option>
+            <option value="Android Streaming">Android Streaming</option>
+            <option value="iOS Streaming">iOS Streaming</option>
+            <option value="Download Sites">Download Sites</option>
+            <option value="Drives / Directories">Drives / Directories</option>
+            <option value="Anime Downloading">Anime Downloading</option>
+            <option value="Educational Downloading">Educational Downloading</option>
+            <option value="Torrent Sites">Torrent Sites</option>
+        </select>
+        <button id="filter-btn">Filter</button>
+    </div>
+    <div id="resource-list"></div>
+
+    <script>
+        const resources = [
+            //-----------------------
+            // _    ____ ___  ____ ___ 
+            // /_\  |_  /|_ _||_  /|_ _|
+            // / _ \  / /  | |  / /  | | 
+            // /_/ \_\/___||___|/___||___|
+            // بر پدر و مادر انحصارطلب لعنت
+            // این راه ادامه داره
+            // تویی که داری این کد رو میخونی، سلام
+            // امیدوارم حالت عالی باشه
+            // این کد صرفا کارش اینه سایت های دانلود و تماشای رایگان رو معرفی کنه و لینک بده
+            // امیدوارم بدردت بخوره
+            // با سپاس، عزیزی
+            //-----------------------
+            // Streaming Sites
+            { name: "movie-web", category: "Streaming Sites", link: "https://movie-web.app", description: "Movies, TV Shows, Anime, Auto-Next, 4K", starred: true },
+            { name: "Hexa", category: "Streaming Sites", link: "https://hexa.to", description: "Movies, TV Shows, Anime, Auto-Next, Discord", starred: true },
+            { name: "XPrime", category: "Streaming Sites", link: "https://xprime.app", description: "Movies, TV Shows, Anime, Auto-Next, Discord", starred: true },
+            { name: "Rive", category: "Streaming Sites", link: "https://rive.me", description: "Movies, TV Shows, Anime, Auto-Next, Discord", starred: true },
+            { name: "uira.live", category: "Streaming Sites", link: "https://uira.live", description: "Movies, TV Shows, Anime, Auto-Next, Discord", starred: true },
+            { name: "FlickyStream", category: "Streaming Sites", link: "https://flickystream.com", description: "Movies, TV Shows, Anime, Auto-Next, Telegram", starred: true },
+            { name: "Vidbox", category: "Streaming Sites", link: "https://vidbox.app", description: "Movies, TV Shows, Anime, Auto-Next, Discord", starred: true },
+            { name: "StreamFlix", category: "Streaming Sites", link: "https://streamflix.to", description: "Movies, TV Shows, Anime, Nice UI, Fast 1080p", starred: true },
+            { name: "watch.lonelil", category: "Streaming Sites", link: "https://watch.lonelil.com", description: "Movies, TV Shows, Anime, Nice UI, Fast 4K + 1080p, Live TV", starred: true },
+            { name: "PrimeFlix", category: "Streaming Sites", link: "https://primeflix.app", description: "Movies, TV Shows, Anime, Nice UI, Fast 1080p", starred: true },
+            { name: "SolarMovie", category: "Streaming Sites", link: "https://solarmovie.to", description: "Movies, TV Shows, Anime" },
+            { name: "VHMovies", category: "Streaming Sites", link: "https://vhmovies.com", description: "Movies, TV Shows, Anime" },
+            { name: "ShowBox", category: "Streaming Sites", link: "https://showboxmovies.net", description: "Movies, TV Shows" },
+            { name: "Soap2Day", category: "Streaming Sites", link: "https://soap2day.to", description: "Movies, TV Shows, Anime" },
+            { name: "FlixHQ", category: "Streaming Sites", link: "https://flixhq.to", description: "Movies, TV Shows, Anime" },
+            { name: "ZoeChip", category: "Streaming Sites", link: "https://zoechip.to", description: "Movies, TV Shows, Anime" },
+            { name: "WatchSeries", category: "Streaming Sites", link: "https://watchseries.id", description: "Movies, TV Shows, Anime" },
+            { name: "HiMovies", category: "Streaming Sites", link: "https://himovies.to", description: "Movies, TV Shows, Anime" },
+            { name: "BFlix", category: "Streaming Sites", link: "https://bflix.to", description: "Movies, TV Shows, Anime" },
+            { name: "1HD", category: "Streaming Sites", link: "https://1hd.to", description: "Movies, TV Shows, Anime" },
+            { name: "GoMovies", category: "Streaming Sites", link: "https://gomovies.sx", description: "Movies, TV Shows, Anime" },
+            { name: "MoviesJoy", category: "Streaming Sites", link: "https://moviesjoy.to", description: "Movies, TV Shows, Anime" },
+            { name: "MyFlixer", category: "Streaming Sites", link: "https://myflixer.to", description: "Movies, TV Shows, Anime" },
+            { name: "LookMovie", category: "Streaming Sites", link: "https://lookmovie2.to", description: "Movies, TV Shows, Anime" },
+            { name: "HDToday", category: "Streaming Sites", link: "https://hdtoday.tv", description: "Movies, TV Shows, Anime" },
+            { name: "123Movies", category: "Streaming Sites", link: "https://123moviesfree.net", description: "Movies, TV Shows, Anime" },
+            { name: "FMovies", category: "Streaming Sites", link: "https://fmovies.to", description: "Movies, TV Shows, Anime" },
+            { name: "StreamM4u", category: "Streaming Sites", link: "https://streamm4u.ws", description: "Movies, TV Shows, Anime" },
+            { name: "GoStream", category: "Streaming Sites", link: "https://gostream.site", description: "Movies, TV Shows, Anime" },
+            { name: "YesMovies", category: "Streaming Sites", link: "https://yesmovies.ag", description: "Movies, TV Shows, Anime" },
+            { name: "Cataz", category: "Streaming Sites", link: "https://cataz.to", description: "Movies, TV Shows, Anime" },
+            { name: "Anix", category: "Streaming Sites", link: "https://anix.to", description: "Movies, TV Shows, Anime" },
+            { name: "Zoro", category: "Streaming Sites", link: "https://zoro.to", description: "Movies, TV Shows, Anime" },
+            { name: "MovieRiser", category: "Streaming Sites", link: "https://movieriser.com", description: "Movies, TV Shows, Anime" },
+            { name: "Luxx", category: "Streaming Sites", link: "https://luxx.to", description: "Movies, TV Shows, Anime" },
+            { name: "CineZone", category: "Streaming Sites", link: "https://cinezone.to", description: "Movies, TV Shows, Anime" },
+            { name: "Dramacool", category: "Streaming Sites", link: "https://dramacool.bg", description: "Movies, TV Shows, Anime" },
+            { name: "Anitaku", category: "Streaming Sites", link: "https://anitaku.to", description: "Movies, TV Shows, Anime" },
+            { name: "AllMoviesHub", category: "Streaming Sites", link: "https://allmovieshub.one", description: "Movies, TV Shows, Anime" },
+            { name: "VidSrc", category: "Streaming Sites", link: "https://vidsrc.me", description: "Movies, TV Shows, Anime" },
+            { name: "StreamWish", category: "Streaming Sites", link: "https://streamwish.com", description: "Movies, TV Shows, Anime" },
+            { name: "VidCloud", category: "Streaming Sites", link: "https://vidcloud.to", description: "Movies, TV Shows, Anime" },
+            { name: "FileMoon", category: "Streaming Sites", link: "https://filemoon.sx", description: "Movies, TV Shows, Anime" },
+            { name: "Voe", category: "Streaming Sites", link: "https://voe.sx", description: "Movies, TV Shows, Anime" },
+            { name: "2Embed", category: "Streaming Sites", link: "https://2embed.cc", description: "Movies, TV Shows, Anime" },
+            { name: "Gomo", category: "Streaming Sites", link: "https://gomo.to", description: "Movies, TV Shows, Anime" },
+            { name: "StreamVid", category: "Streaming Sites", link: "https://streamvid.net", description: "Movies, TV Shows, Anime" },
+            { name: "DopeBox", category: "Streaming Sites", link: "https://dopebox.to", description: "Movies, TV Shows, Anime" },
+            { name: "SFlix", category: "Streaming Sites", link: "https://sflix.to", description: "Movies, TV Shows, Anime" },
+            { name: "MovieFire", category: "Streaming Sites", link: "https://moviefire.net", description: "Movies, TV Shows, Anime" },
+            { name: "M4uHD", category: "Streaming Sites", link: "https://m4uhd.tv", description: "Movies, TV Shows, Anime" },
+            { name: "FilmOn", category: "Streaming Sites", link: "https://filmon.com", description: "Movies, TV Shows, Anime" },
+            { name: "TinyZone", category: "Streaming Sites", link: "https://tinyzonetv.to", description: "Movies, TV Shows, Anime" },
+            { name: "PopcornFlix", category: "Streaming Sites", link: "https://popcornflix.com", description: "Movies, TV Shows, Anime" },
+            { name: "Crackle", category: "Streaming Sites", link: "https_viewing revision from 4 years ago://crackle.com", description: "Movies, TV Shows, Anime" },
+            { name: "Plex", category: "Streaming Sites", link: "https://plex.tv", description: "Movies, TV Shows, Anime" },
+            { name: "FreeMovies", category: "Streaming Sites", link: "https://freemoviesfull.net", description: "Movies, TV Shows, Anime" },
+            { name: "VexMovies", category: "Streaming Sites", link: "https://vexmovies.org", description: "Movies, TV Shows, Anime" },
+            { name: "5Movies", category: "Streaming Sites", link: "https://5movies.cloud", description: "Movies, TV Shows, Anime" },
+            { name: "StreamLord", category: "Streaming Sites", link: "https://streamlord.com", description: "Movies, TV Shows, Anime" },
+            { name: "WatchFree", category: "Streaming Sites", link: "https://watchfree.ac", description: "Movies, TV Shows, Anime" },
+            { name: "Xumo", category: "Streaming Sites", link: "https://xumo.tv", description: "Movies, TV Shows, Anime" },
+            { name: "AZMovies", category: "Streaming Sites", link: "https://azmovies.app", description: "Movies, TV Shows, Anime" },
+            { name: "PutLocker", category: "Streaming Sites", link: "https://putlocker.is", description: "Movies, TV Shows, Anime" },
+            { name: "MoviesFoundOnline", category: "Streaming Sites", link: "https://moviesfoundonline.com", description: "Movies, TV Shows, Anime" },
+            { name: "TheRokuChannel", category: "Streaming Sites", link: "https://therokuchannel.roku.com", description: "Movies, TV Shows, Anime" },
+            { name: "Freevee", category: "Streaming Sites", link: "https://www.amazon.com/gp/video/storefront/ref=atv_hm_hom_c_0_1?contentType=freevee", description: "Movies, TV Shows, Anime" },
+            { name: "PeacockTV", category: "Streaming Sites", link: "https://peacocktv.com", description: "Movies, TV Shows, Anime" },
+            { name: "Vudu", category: "Streaming Sites", link: "https://vudu.com", description: "Movies, TV Shows, Anime" },
+            { name: "Redbox", category: "Streaming Sites", link: "https://redbox.com", description: "Movies, TV Shows, Anime" },
+            { name: "Sling", category: "Streaming Sites", link: "https://sling.com", description: "Movies, TV Shows, Anime" },
+            { name: "Yidio", category: "Streaming Sites", link: "https://yidio.com", description: "Movies, TV Shows, Anime" },
+            { name: "ShoutFactoryTV", category: "Streaming Sites", link: "https://shoutfactorytv.com", description: "Movies, TV Shows, Anime" },
+            { name: "TromaNow", category: "Streaming Sites", link: "https://troma.com", description: "Movies, TV Shows, Anime" },
+            { name: "ConTV", category: "Streaming Sites", link: "https://contv.com", description: "Movies, TV Shows, Anime" },
+            { name: "BigScreenMovies", category: "Streaming Sites", link: "https://bigscreenmovies.com", description: "Movies, TV Shows, Anime" },
+            { name: "Fawesome", category: "Streaming Sites", link: "https://fawesome.tv", description: "Movies, TV Shows, Anime" },
+            { name: "MidnightPulp", category: "Streaming Sites", link: "https://midnightpulp.com", description: "Movies, TV Shows, Anime" },
+            { name: "FilmRise", category: "Streaming Sites", link: "https://filmrise.com", description: "Movies, TV Shows, Anime" },
+            { name: "Revry", category: "Streaming Sites", link: "https://revry.tv", description: "Movies, TV Shows, Anime" },
+            { name: "PlexWatch", category: "Streaming Sites", link: "https://plexwatch.com", description: "Movies, TV Shows, Anime" },
+            { name: "Locast", category: "Streaming Sites", link: "https://locast.org", description: "Movies, TV Shows, Anime" },
+            { name: "Stirr", category: "Streaming Sites", link: "https://stirr.com", description: "Movies, TV Shows, Anime" },
+            { name: "TubiTV", category: "Streaming Sites", link: "https://tubitv.com", description: "Movies, TV Shows, Anime" },
+            { name: "PlutoTV", category: "Streaming Sites", link: "https://pluto.tv", description: "Movies, TV Shows, Anime" },
+            // Free with Ads
+            { name: "FreeGreatMovies", category: "Free with Ads", link: "https://freegreatmovies.com", description: "YouTube Movie Collection" },
+            { name: "Voleflix", category: "Free with Ads", link: "https://voleflix.com", description: "YouTube Movie Collection" },
+            { name: "OpenCulture", category: "Free with Ads", link: "https://openculture.com", description: "Free & Public Domain Movies" },
+            { name: "Kanopy", category: "Free with Ads", link: "https://kanopy.com", description: "Library Card Required, Educational" },
+            { name: "Hoopla", category: "Free with Ads", link: "https://hoopladigital.com", description: "Library Card Required" },
+            { name: "Free-Official-Youtube-Content", category: "Free with Ads", link: "https://youtube.com", description: "Free Official YouTube Content", index: true },
+            // Anime Streaming
+            { name: "Layendimator", category: "Anime Streaming", link: "https://layendimator.app", description: "Desktop Streaming App, Discord" },
+            { name: "Anikin", category: "Anime Streaming", link: "https://anikin.app", description: "Desktop Streaming App, Discord" },
+            { name: "AnimeZ", category: "Anime Streaming", link: "https://animez.app", description: "Fast Streams, High Ratings", starred: true },
+            { name: "AnimeID", category: "Anime Streaming", link: "https://animeid.tv", description: "Anime Streaming" },
+            { name: "AnimeFreak", category: "Anime Streaming", link: "https://animefreak.tv", description: "Anime Streaming" },
+            { name: "9Anime", category: "Anime Streaming", link: "https://9anime.to", description: "Anime Streaming" },
+            { name: "GogoAnime", category: "Anime Streaming", link: "https://gogoanime.fi", description: "Anime Streaming" },
+            { name: "AnimeHeaven", category: "Anime Streaming", link: "https://animeheaven.ru", description: "Anime Streaming" },
+            { name: "AnimePahe", category: "Anime Streaming", link: "https://animepahe.com", description: "Anime Streaming" },
+            { name: "AnimeDao", category: "Anime Streaming", link: "https://animedao.to", description: "Anime Streaming" },
+            { name: "4Anime", category: "Anime Streaming", link: "https://4anime.to", description: "Anime Streaming" },
+            { name: "AnimeKisa", category: "Anime Streaming", link: "https://animekisa.tv", description: "Anime Streaming" },
+            { name: "AnimeFox", category: "Anime Streaming", link: "https://animefox.io", description: "Anime Streaming" },
+            { name: "AnimeFLV", category: "Anime Streaming", link: "https://animeflv.net", description: "Anime Streaming" },
+            { name: "AnimeOwl", category: "Anime Streaming", link: "https://animeowl.net", description: "Anime Streaming" },
+            { name: "AnimeRush", category: "Anime Streaming", link: "https://animerush.tv", description: "Anime Streaming" },
+            { name: "AnimeSimple", category: "Anime Streaming", link: "https://animesimple.com", description: "Anime Streaming" },
+            { name: "AnimeVibe", category: "Anime Streaming", link: "https://animevibe.tv", description: "Anime Streaming" },
+            { name: "AnimeSuge", category: "Anime Streaming", link: "https://animesuge.to", description: "Anime Streaming" },
+            { name: "AnimeTosho", category: "Anime Streaming", link: "https://animetosho.org", description: "Anime Streaming" },
+            { name: "AnimeOut", category: "Anime Streaming", link: "https://animeout.xyz", description: "Anime Streaming" },
+            { name: "AnimeFlix", category: "Anime Streaming", link: "https://animeflix.live", description: "Anime Streaming" },
+            { name: "AnimeHub", category: "Anime Streaming", link: "https://animehub.ac", description: "Anime Streaming" },
+            { name: "AnimeShow", category: "Anime Streaming", link: "https://animeshow.tv", description: "Anime Streaming" },
+            { name: "AnimeUltima", category: "Anime Streaming", link: "https://animeultima.to", description: "Anime Streaming" },
+            { name: "AnimeXpress", category: "Anime Streaming", link: "https://animexpress.io", description: "Anime Streaming" },
+            { name: "AnimeFever", category: "Anime Streaming", link: "https://animefever.tv", description: "Anime Streaming" },
+            { name: "AnimeBam", category: "Anime Streaming", link: "https://animebam.net", description: "Anime Streaming" },
+            { name: "AnimePlanet", category: "Anime Streaming", link: "https://anime-planet.com", description: "Anime Streaming" },
+            { name: "Crunchyroll", category: "Anime Streaming", link: "https://crunchyroll.com", description: "Anime Streaming" },
+            { name: "Funimation", category: "Anime Streaming", link: "https://funimation.com", description: "Anime Streaming" },
+            { name: "Hidive", category: "Anime Streaming", link: "https://hidive.com", description: "Anime Streaming" },
+            { name: "VRV", category: "Anime Streaming", link: "https://vrv.co", description: "Anime Streaming" },
+            { name: "RetroCrush", category: "Anime Streaming", link: "https://retrocrush.tv", description: "Anime Streaming" },
+            { name: "AsianCrush", category: "Anime Streaming", link: "https://asiancrush.com", description: "Anime Streaming" },
+            // Cartoon Streaming
+            { name: "KimCartoon", category: "Cartoon Streaming", link: "https://kimcartoon.li", description: "Cartoons" },
+            { name: "WatchCartoon", category: "Cartoon Streaming", link: "https://watchcartoononline.io", description: "Cartoons" },
+            { name: "SuperCartoons", category: "Cartoon Streaming", link: "https://supercartoons.net", description: "Cartoons" },
+            { name: "CartoonCrazy", category: "Cartoon Streaming", link: "https://cartooncrazy.net", description: "Cartoons" },
+            { name: "ToonJet", category: "Cartoon Streaming", link: "https://toonjet.com", description: "Cartoons" },
+            { name: "KissCartoon", category: "Cartoon Streaming", link: "https://kisscartoon.sh", description: "Cartoons" },
+            { name: "Cartoon8", category: "Cartoon Streaming", link: "https://cartoon8.tv", description: "Cartoons"
+
+            },
+            { name: "Toonova", category: "Cartoon Streaming", link: "https://toonova.net", description: "Cartoons" },
+            { name: "WatchCartoonsOnline", category: "Cartoon Streaming", link: "https://watchcartoonsonline.cc", description: "Cartoons" },
+            { name: "AnimeToons", category: "Cartoon Streaming", link: "https://animetoons.org", description: "Cartoons" },
+            // TV Streaming
+            { name: "PlutoTV", category: "TV Streaming", link: "https://pluto.tv", description: "Free TV Streaming" },
+            { name: "TubiTV", category: "TV Streaming", link: "https://tubitv.com", description: "Free TV Streaming" },
+            { name: "Crackle", category: "TV Streaming", link: "https://crackle.com", description: "Free TV Streaming" },
+            { name: "Xumo", category: "TV Streaming", link: "https://xumo.tv", description: "Free TV Streaming" },
+            { name: "PeacockTV", category: "TV Streaming", link: "https://peacocktv.com", description: "Free TV Streaming" },
+            { name: "Freevee", category: "TV Streaming", link: "https://www.amazon.com/gp/video/storefront/ref=atv_hm_hom_c_0_1?contentType=freevee", description: "Free TV Streaming" },
+            { name: "TheRokuChannel", category: "TV Streaming", link: "https://therokuchannel.roku.com", description: "Free TV Streaming" },
+            { name: "Vudu", category: "TV Streaming", link: "https://vudu.com", description: "Free TV Streaming" },
+            { name: "Sling", category: "TV Streaming", link: "https://sling.com", description: "Free TV Streaming" },
+            { name: "Yidio", category: "TV Streaming", link: "https://yidio.com", description: "Free TV Streaming" },
+            { name: "ShoutFactoryTV", category: "TV Streaming", link: "https://shoutfactorytv.com", description: "Free TV Streaming" },
+            { name: "FilmRise", category: "TV Streaming", link: "https://filmrise.com", description: "Free TV Streaming" },
+            { name: "Revry", category: "TV Streaming", link: "https://revry.tv", description: "Free TV Streaming" },
+            { name: "Locast", category: "TV Streaming", link: "https://locast.org", description: "Free TV Streaming" },
+            { name: "Stirr", category: "TV Streaming", link: "https://stirr.com", description: "Free TV Streaming" },
+            // Drama Streaming
+            { name: "Viki", category: "Drama Streaming", link: "https://viki.com", description: "Asian Dramas" },
+            { name: "iQiyi", category: "Drama Streaming", link: "https://iq.com", description: "Asian Dramas" },
+            { name: "Dramacool", category: "Drama Streaming", link: "https://dramacool.bg", description: "Asian Dramas" },
+            { name: "KissAsian", category: "Drama Streaming", link: "https://kissasian.sh", description: "Asian Dramas" },
+            { name: "MyAsianTV", category: "Drama Streaming", link: "https://myasiantv.to", description: "Asian Dramas" },
+            { name: "DramaFever", category: "Drama Streaming", link: "https://dramafever.com", description: "Asian Dramas" },
+            { name: "Kocowa", category: "Drama Streaming", link: "https://kocowa.com", description: "Asian Dramas" },
+            { name: "OnDemandKorea", category: "Drama Streaming", link: "https://ondemandkorea.com", description: "Asian Dramas" },
+            { name: "AsianCrush", category: "Drama Streaming", link: "https://asiancrush.com", description: "Asian Dramas" },
+            { name: "WeTV", category: "Drama Streaming", link: "https://wetv.vip", description: "Asian Dramas" },
+            { name: "Viu", category: "Drama Streaming", link: "https://viu.com", description: "Asian Dramas" },
+            // Specialty Streaming
+            { name: "Classic Cinema Online", category: "Specialty Streaming", link: "https://classiccinemaonline.com", description: "Classic Films" },
+            { name: "BnWMovies", category: "Specialty Streaming", link: "https://bnwmovies.com", description: "Black & White Classic Films" },
+            { name: "WikiFlix", category: "Specialty Streaming", link: "https://wikiflix.org", description: "Classic Films" },
+            { name: "TromaNow", category: "Specialty Streaming", link: "https://troma.com", description: "Cult Films" },
+            { name: "MidnightPulp", category: "Specialty Streaming", link: "https://midnightpulp.com", description: "Cult Films" },
+            { name: "ShoutFactoryTV", category: "Specialty Streaming", link: "https://shoutfactorytv.com", description: "Cult Films" },
+            { name: "ConTV", category: "Specialty Streaming", link: "https://contv.com", description: "Comic-Con Films" },
+            { name: "BigScreenMovies", category: "Specialty Streaming", link: "https://bigscreenmovies.com", description: "Classic Films" },
+            { name: "Fawesome", category: "Specialty Streaming", link: "https://fawesome.tv", description: "Niche Films" },
+            // Educational Streaming
+            { name: "Khan Academy", category: "Educational Streaming", link: "https://khanacademy.org", description: "Educational Videos" },
+            { name: "Academic Earth", category: "Educational Streaming", link: "https://academicearth.org", description: "Educational Videos" },
+            { name: "Coursera", category: "Educational Streaming", link: "https://coursera.org", description: "Educational Videos" },
+            { name: "edX", category: "Educational Streaming", link: "https://edx.org", description: "Educational Videos" },
+            { name: "MIT OpenCourseWare", category: "Educational Streaming", link: "https://ocw.mit.edu", description: "Educational Videos" },
+            { name: "Open Yale Courses", category: "Educational Streaming", link: "https://oyc.yale.edu", description: "Educational Videos" },
+            { name: "Stanford Online", category: "Educational Streaming", link: "https://online.stanford.edu", description: "Educational Videos" },
+            { name: "Udemy Free", category: "Educational Streaming", link: "https://udemy.com", description: "Educational Videos" },
+            // Live TV
+            { name: "USTVGO", category: "Live TV", link: "https://ustvgo.tv", description: "Live TV Channels" },
+            { name: "TV247", category: "Live TV", link: "https://tv247.us", description: "Live TV Channels" },
+            { name: "TV Garden", category: "Live TV", link: "https://tvgarden.com", description: "Nice UI, Lots of Channels", starred: true },
+            { name: "FreeInterTV", category: "Live TV", link: "https://freeintertv.com", description: "Live TV Channels" },
+            { name: "StreamLive", category: "Live TV", link: "https://streamlive.to", description: "Live TV Channels" },
+            { name: "OKLiveTV", category: "Live TV", link: "https://oklivetv.com", description: "Live TV Channels" },
+            { name: "LiveTV", category: "Live TV", link: "https://livetv.sx", description: "Live TV Channels" },
+            { name: "Time4TV", category: "Live TV", link: "https://time4tv.me", description: "Live TV Channels" },
+            { name: "TVPlayer", category: "Live TV", link: "https://tvplayer.com", description: "Live TV Channels" },
+            { name: "123TVNow", category: "Live TV", link: "https://123tvnow.com", description: "Live TV Channels" },
+            { name: "UStream", category: "Live TV", link: "https://ustream.tv", description: "Live TV Channels" },
+            { name: "Distill", category: "Live TV", link: "https://distill.com", description: "Live TV Channels" },
+            { name: "SquidTV", category: "Live TV", link: "https://squidtv.net", description: "Live TV Channels" },
+            { name: "PlutoTV", category: "Live TV", link: "https://pluto.tv", description: "Live TV Channels" },
+            { name: "Xumo", category: "Live TV", link: "https://xumo.tv", description: "Live TV Channels" },
+            { name: "PeacockTV", category: "Live TV", link: "https://peacocktv.com", description: "Live TV Channels" },
+            { name: "TheRokuChannel", category: "Live TV", link: "https://therokuchannel.roku.com", description: "Live TV Channels" },
+            { name: "Sling", category: "Live TV", link: "https://sling.com", description: "Live TV Channels" },
+            { name: "Stirr", category: "Live TV", link: "https://stirr.com", description: "Live TV Channels" },
+            // Live Sports
+            { name: "SportsBay", category: "Live Sports", link: "https://sportsbay.org", description: "Live Sports Streaming" },
+            { name: "Stream2Watch", category: "Live Sports", link: "https://stream2watch.is", description: "Live Sports Streaming" },
+            { name: "CricFree", category: "Live Sports", link: "https://cricfree.io", description: "Live Sports Streaming" },
+            { name: "LiveSoccerTV", category: "Live Sports", link: "https://livesoccertv.com", description: "Live Sports Streaming" },
+            { name: "FirstRowSports", category: "Live Sports", link: "https://firstrowsports.to", description: "Live Sports Streaming" },
+            { name: "SportRAR", category: "Live Sports", link: "https://sportrar.tv", description: "Live Sports Streaming" },
+            { name: "MamaHD", category: "Live Sports", link: "https://mamahd.ws", description: "Live Sports Streaming" },
+            { name: "VIPLeague", category: "Live Sports", link: "https://vipleague.im", description: "Live Sports Streaming" },
+            { name: "SportLemon", category: "Live Sports", link: "https://sportlemon.net", description: "Live Sports Streaming" },
+            { name: "BuffStreams", category: "Live Sports", link: "https://buffstreams.is", description: "Live Sports Streaming" },
+            { name: "CrackStreams", category: "Live Sports", link: "https://crackstreams.me", description: "Live Sports Streaming" },
+            { name: "SportSurge", category: "Live Sports", link: "https://sportsurge.net", description: "Live Sports Streaming" },
+            { name: "WeakStreams", category: "Live Sports", link: "https://weakstreams.com", description: "Live Sports Streaming" },
+            { name: "MethStreams", category: "Live Sports", link: "https://methstreams.com", description: "Live Sports Streaming" },
+            { name: "StrikeOut", category: "Live Sports", link: "https://strikeout.im", description: "Live Sports Streaming" },
+            { name: "FootyBite", category: "Live Sports", link: "https://footybite.to", description: "Live Sports Streaming" },
+            { name: "RedditStreams", category: "Live Sports", link: "https://redditstreams.live", description: "Live Sports Streaming" },
+            { name: "MarkkyStreams", category: "Live Sports", link: "https://markkystreams.com", description: "Live Sports Streaming" },
+            { name: "StreamEast", category: "Live Sports", link: "https://streameast.to", description: "Live Sports Streaming" },
+            { name: "VIPBox", category: "Live Sports", link: "https://vipbox.lc", description: "Live Sports Streaming" },
+            { name: "720pStream", category: "Live Sports", link: "https://720pstream.me", description: "Live Sports Streaming" },
+            { name: "Ronaldo7", category: "Live Sports", link: "https://ronaldo7.net", description: "Live Sports Streaming" },
+            { name: "NBAStreamsXX", category: "Live Sports", link: "https://nbastreamsxx.com", description: "Live Sports Streaming" },
+            { name: "NHL66", category: "Live Sports", link: "https://nhl66.ir", description: "Live Sports Streaming" },
+            { name: "NFLBite", category: "Live Sports", link: "https://nflbite.com", description: "Live Sports Streaming" },
+            { name: "F1Streams", category: "Live Sports", link: "https://f1streams.me", description: "Live Sports Streaming" },
+            // Sports Replays
+            { name: "FullMatches", category: "Sports Replays", link: "https://fullmatchesandshows.com", description: "Sports Replays" },
+            { name: "Footballia", category: "Sports Replays", link: "https://footballia.net", description: "Football Replays" },
+            { name: "ReplayFootball", category: "Sports Replays", link: "https://replayfootball.com", description: "Sports Replays" },
+            { name: "SportReplay", category: "Sports Replays", link: "https://sportreplay.net", description: "Sports Replays" },
+            { name: "WatchNHL", category: "Sports Replays", link: "https://watchnhl.com", description: "Sports Replays" },
+            { name: "NBAFull", category: "Sports Replays", link: "https://nbafull.com", description: "Sports Replays" },
+            { name: "FootyFull", category: "Sports Replays", link: "https://footyfull.com", description: "Sports Replays" },
+            { name: "TennisReplays", category: "Sports Replays", link: "https://tennisreplays.net", description: "Sports Replays" },
+            // IPTV Tools
+            { name: "IPTV Index", category: "IPTV Tools", link: "https://iptvindex.com", description: "IPTV Playlist Index, Discord", index: true },
+            { name: "IPTV-org", category: "IPTV Tools", link: "https://iptv-org.github.io", description: "IPTV Playlist Index, GitHub", index: true },
+            { name: "Fluxus", category: "IPTV Tools", link: "https://fluxus.to", description: "IPTV Playlist Index" },
+            { name: "IPTVStack", category: "IPTV Tools", link: "https://iptvstack.com", description: "IPTV Playlist Index" },
+            { name: "IPTVCommunity", category: "IPTV Tools", link: "https://iptv.community", description: "IPTV Playlist Index" },
+            { name: "IPTVLinks", category: "IPTV Tools", link: "https://iptvlinks.com", description: "IPTV Playlist Index" },
+            { name: "DailyIPTV", category: "IPTV Tools", link: "https://dailyiptv.com", description: "IPTV Playlist Index" },
+            { name: "IPTVPlaylists", category: "IPTV Tools", link: "https://iptvplaylists.com", description: "IPTV Playlist Index" },
+            // Android TV
+            { name: "Aptoide TV", category: "Android TV", link: "https://aptoide.com", description: "Android TV Apps" },
+            { name: "Kodi", category: "Android TV", link: "https://kodi.tv", description: "Android TV Apps" },
+            { name: "Plex", category: "Android TV", link: "https://plex.tv", description: "Android TV Apps" },
+            { name: "TiviMate", category: "Android TV", link: "https://tivimate.com", description: "Android TV Apps" },
+            { name: "XCIPTV", category: "Android TV", link: "https://xciptv.com", description: "Android TV Apps" },
+            { name: "IPTV Smarters", category: "Android TV", link: "https://iptvsmarters.com", description: "Android TV Apps" },
+            // Android Streaming
+            { name: "CinemaHD", category: "Android Streaming", link: "https://cinemahd.app", description: "Android Streaming App, Subreddit" },
+            { name: "TeaTV", category: "Android Streaming", link: "https://teatv.net", description: "Android Streaming App" },
+            { name: "BeeTV", category: "Android Streaming", link: "https://beetvapk.net", description: "Android Streaming App" },
+            { name: "CyberFlix", category: "Android Streaming", link: "https://cyberflix.app", description: "Android Streaming App" },
+            { name: "MediaBoxHD", category: "Android Streaming", link: "https://mediaboxhd.net", description: "Android Streaming App" },
+            { name: "TyphoonTV", category: "Android Streaming", link: "https://typhoontv.me", description: "Android Streaming App" },
+            { name: "NovaTV", category: "Android Streaming", link: "https://novatv.app", description: "Android Streaming App" },
+            { name: "FilmPlus", category: "Android Streaming", link: "https://filmplus.app", description: "Android Streaming App" },
+            { name: "OnStream", category: "Android Streaming", link: "https://onstream.so", description: "Android Streaming App" },
+            { name: "VivaTV", category: "Android Streaming", link: "https://vivatv.app", description: "Android Streaming App" },
+            { name: "CucoTV", category: "Android Streaming", link: "https://cucotv.net", description: "Android Streaming App" },
+            { name: "UnlockMyTV", category: "Android Streaming", link: "https://unlockmytv.com", description: "Android Streaming App" },
+            { name: "Syncler", category: "Android Streaming", link: "https://syncler.net", description: "Android Streaming App" },
+            { name: "Weyd", category: "Android Streaming", link: "https://weyd.app", description: "Android Streaming App" },
+            { name: "HDOBox", category: "Android Streaming", link: "https://hdobox.app", description: "Android Streaming App" },
+            { name: "APKPure", category: "Android Streaming", link: "https://apkpure.com", description: "Android Streaming App" },
+            { name: "Aptoide", category: "Android Streaming", link: "https://aptoide.com", description: "Android Streaming App" },
+            { name: "ZiniTevi", category: "Android Streaming", link: "https://zinitevi.com", description: "Android Streaming App" },
+            { name: "MorpheusTV", category: "Android Streaming", link: "https://morpheustv.app", description: "Android Streaming App" },
+            { name: "CatMouse", category: "Android Streaming", link: "https://catmouseapk.org", description: "Android Streaming App" },
+            { name: "TitaniumTV", category: "Android Streaming", link: "https://titaniumtv.app", description: "Android Streaming App" },
+            { name: "DreamTV", category: "Android Streaming", link: "https://dreamtv.app", description: "Android Streaming App" },
+            { name: "FreeFlixHQ", category: "Android Streaming", link: "https://freeflixhq.com", description: "Android Streaming App" },
+            { name: "ShowBox", category: "Android Streaming", link: "https://showboxmovies.net", description: "Android Streaming App" },
+            { name: "MovieBox", category: "Android Streaming", link: "https://movieboxpro.app", description: "Android Streaming App" },
+            { name: "PopcornTime", category: "Android Streaming", link: "https://popcorntime.app", description: "Android Streaming App" },
+            { name: "Stremio", category: "Android Streaming", link: "https://stremio.com", description: "Android Streaming App" },
+            { name: "Kodi", category: "Android Streaming", link: "https://kodi.tv", description: "Android Streaming App" },
+            { name: "Plex", category: "Android Streaming", link: "https://plex.tv", description: "Android Streaming App" },
+            // iOS Streaming
+            { name: "MovieBoxPro", category: "iOS Streaming", link: "https://movieboxpro.app", description: "iOS Streaming App" },
+            { name: "ZiniTevi", category: "iOS Streaming", link: "https://zinitevi.com", description: "iOS Streaming App" },
+            { name: "MediaBoxHD", category: "iOS Streaming", link: "https://mediaboxhd.net", description: "iOS Streaming App" },
+            { name: "CucoTV", category: "iOS Streaming", link: "https://cucotv.net", description: "iOS Streaming App" },
+            { name: "PopcornTime", category: "iOS Streaming", link: "https://popcorntime.app", description: "iOS Streaming App" },
+            { name: "Kodi", category: "iOS Streaming", link: "https://kodi.tv", description: "iOS Streaming App" },
+            { name: "Plex", category: "iOS Streaming", link: "https://plex.tv", description: "iOS Streaming App" },
+            // Download Sites
+            { name: "Archive.org", category: "Download Sites", link: "https://archive.org", description: "Videos, Audio, Magazines, Newspapers, ROMs" },
+            { name: "SoftArchive", category: "Download Sites", link: "https://softarchive.is", description: "Videos, Audio, Books, Comics (Avoid Software/Games)" },
+            { name: "Pahe", category: "Download Sites", link: "https://pahe.me", description: "Movies, TV Shows" },
+            { name: "DDLValley", category: "Download Sites", link: "https://ddlvalley.me", description: "Movies, TV Shows" },
+            { name: "OOMoye", category: "Download Sites", link: "https://oomoye.com", description: "Big Libraries, Fast Hosts, Single Click Downloads", starred: true },
+            { name: "PKMovies", category: "Download Sites", link: "https://pkmovies.app", description: "Big Libraries, Fast Hosts, Single Click Downloads", starred: true },
+            { name: "MoviesDrive", category: "Download Sites", link: "https://moviesdrive.net", description: "Movies, TV Shows" },
+            { name: "HDEncode", category: "Download Sites", link: "https://hdencode.org", description: "Movies, TV Shows" },
+            { name: "PSArips", category: "Download Sites", link: "https://psarips.one", description: "Movies, TV Shows" },
+            { name: "MKVCage", category: "Download Sites", link: "https://mkvcage.site", description: "Movies, TV Shows" },
+            { name: "YIFY", category: "Download Sites", link: "https://yify.is", description: "Movies, TV Shows" },
+            { name: "RARBG", category: "Download Sites", link: "https://rarbg.to", description: "Movies, TV Shows" },
+            { name: "EZTV", category: "Download Sites", link: "https://eztv.re", description: "Movies, TV Shows" },
+            { name: "MoviesVerse", category: "Download Sites", link: "https://moviesverse.org", description: "Movies, TV Shows" },
+            { name: "WorldFree4u", category: "Download Sites", link: "https://worldfree4u.lol", description: "Movies, TV Shows" },
+            { name: "FilmyZilla", category: "Download Sites", link: "https://filmyzilla.com", description: "Movies, TV Shows" },
+            { name: "TamilRockers", category: "Download Sites", link: "https://tamilrockers.ws", description: "Movies, TV Shows" },
+            { name: "Bolly4u", category: "Download Sites", link: "https://bolly4u.org", description: "Movies, TV Shows" },
+            { name: "KatMovieHD", category: "Download Sites", link: "https://katmoviehd.is", description: "Movies, TV Shows" },
+            { name: "SkyMoviesHD", category: "Download Sites", link: "https://skymovieshd.ltd", description: "Movies, TV Shows" },
+            { name: "MoviesCounter", category: "Download Sites", link: "https://moviescounter.se", description: "Movies, TV Shows" },
+            { name: "9xMovies", category: "Download Sites", link: "https://9xmovies.cloud", description: "Movies, TV Shows" },
+            { name: "JalshaMoviez", category: "Download Sites", link: "https://jalshamoviez.pw", description: "Movies, TV Shows" },
+            { name: "DownloadHub", category: "Download Sites", link: "https://downloadhub.cloud", description: "Movies, TV Shows" },
+            { name: "MoviesFlix", category: "Download Sites", link: "https://moviesflix.com", description: "Movies, TV Shows" },
+            { name: "HDMoviesHub", category: "Download Sites", link: "https://hdmovieshub.me", description: "Movies, TV Shows" },
+            { name: "MovieRulz", category: "Download Sites", link: "https://movierulz.to", description: "Movies, TV Shows" },
+            { name: "TodayPk", category: "Download Sites", link: "https://todaypk.ag", description: "Movies, TV Shows" },
+            { name: "ExtraMovies", category: "Download Sites", link: "https://extramovies.casa", description: "Movies, TV Shows" },
+            { name: "CineVood", category: "Download Sites", link: "https://cinevood.net", description: "Movies, TV Shows" },
+            { name: "Afilmywap", category: "Download Sites", link: "https://afilmywap.in", description: "Movies, TV Shows" },
+            { name: "7StarHD", category: "Download Sites", link: "https://7starhd.ltd", description: "Movies, TV Shows" },
+            { name: "Mp4Moviez", category: "Download Sites", link: "https://mp4moviez.guru", description: "Movies, TV Shows" },
+            { name: "SDMoviesPoint", category: "Download Sites", link: "https://sdmoviespoint.vip", description: "Movies, TV Shows" },
+            { name: "MoviesPur", category: "Download Sites", link: "https://moviespur.club", description: "Movies, TV Shows" },
+            { name: "CoolMoviez", category: "Download Sites", link: "https://coolmoviez.net", description: "Movies, TV Shows" },
+            { name: "MoviezWap", category: "Download Sites", link: "https://moviezwap.org", description: "Movies, TV Shows" },
+            { name: "OKhatrimaza", category: "Download Sites", link: "https://okhatrimaza.com", description: "Movies, TV Shows" },
+            { name: "FouMovies", category: "Download Sites", link: "https://foumovies.co", description: "Movies, TV Shows" },
+            { name: "MoviesWood", category: "Download Sites", link: "https://movieswood.me", description: "Movies, TV Shows" },
+            { name: "HDHub4u", category: "Download Sites", link: "https://hdhub4u.mx", description: "Movies, TV Shows" },
+            { name: "OceanOfMovies", category: "Download Sites", link: "https://oceanofmovies.ws", description: "Movies, TV Shows" },
+            { name: "MoviesBaba", category: "Download Sites", link: "https://moviesbaba.com", description: "Movies, TV Shows" },
+            { name: "MoviesDA", category: "Download Sites", link: "https://moviesda.net", description: "Movies, TV Shows" },
+            { name: "TamilMV", category: "Download Sites", link: "https://tamilmv.re", description: "Movies, TV Shows" },
+            { name: "TamilYogi", category: "Download Sites", link: "https://tamilyogi.best", description: "Movies, TV Shows" },
+            { name: "Isaimini", category: "Download Sites", link: "https://isaimini.tel", description: "Movies, TV Shows" },
+            { name: "Kuttymovies", category: "Download Sites", link: "https://kuttymovies7.net", description: "Movies, TV Shows" },
+            { name: "TnhdMovies", category: "Download Sites", link: "https://tnhdmovies.in", description: "Movies, TV Shows" },
+            { name: "JioRockers", category: "Download Sites", link: "https://jiorockers.vip", description: "Movies, TV Shows" },
+            { name: "TeluguWap", category: "Download Sites", link: "https://teluguwap.net", description: "Movies, TV Shows" },
+            { name: "MovierulzTV", category: "Download Sites", link: "https://movierulz.tv", description: "Movies, TV Shows" },
+            { name: "ThopTV", category: "Download Sites", link: "https://thoptv.pro", description: "Movies, TV Shows" },
+            { name: "Pikashow", category: "Download Sites", link: "https://pikashowapp.net", description: "Movies, TV Shows" },
+            // Drives / Directories
+            { name: "LightDLMovies", category: "Drives / Directories", link: "https://lightdlmovies.com", description: "Movie Directory Index, Telegram", index: true },
+            { name: "MoviesFoundOnline", category: "Drives / Directories", link: "https://moviesfoundonline.com", description: "Free Movies & Shows" },
+            { name: "OpenDirectory", category: "Drives / Directories", link: "https://reddit.com/r/opendirectories", description: "Open Directories Subreddit, Telegram", index: true },
+            { name: "EyeDex", category: "Drives / Directories", link: "https://eyedex.org", description: "Open Directory Search Engine", starred: true },
+            { name: "ODCrawler", category: "Drives / Directories", link: "https://odcrawler.xyz", description: "Open Directory Search Engine", starred: true },
+            { name: "ODS", category: "Drives / Directories", link: "https://ods.com", description: "Open Directory Search Engine", starred: true },
+            { name: "mmnt", category: "Drives / Directories", link: "https://mmnt.net", description: "Open Directory Search Engine", starred: true },
+            { name: "Soulseek", category: "Drives / Directories", link: "https://soulseekqt.net", description: "File Sharing App, Stats, Server App" },
+            { name: "eMule Plus", category: "Drives / Directories", link: "https://emuleplus.info", description: "File Sharing App" },
+            { name: "mega.archive", category: "Drives / Directories", link: "https://discord.com/invite/megaarchive", description: "Megadrive Archive, Discord, Chat" },
+            { name: "Napalm FTP", category: "Drives / Directories", link: "https://napalm-ftp.com", description: "FTP Search" },
+            { name: "Mamont", category: "Drives / Directories", link: "https://mamont.com", description: "FTP Search" },
+            { name: "Search-22", category: "Drives / Directories", link: "https://search-22.com", description: "FTP Search" },
+            { name: "dedigger", category: "Drives / Directories", link: "https://dedigger.com", description: "Google Drive File Search" },
+            { name: "Sala De Espera", category: "Drives / Directories", link: "https://saladeespera.com", description: "Drive Sharing Community" },
+            { name: "Open Directory Downloader", category: "Drives / Directories", link: "https://opendirectorydownloader.com", description: "Open Directory Indexer" },
+            { name: "CD.TextFiles", category: "Drives / Directories", link: "https://cd.textfiles.com", description: "CD Text File Archive" },
+            // Anime Downloading
+            { name: "Wotaku", category: "Anime Downloading", link: "https://wotaku.app", description: "Anime Download Index, Discord, GitHub", index: true },
+            { name: "EverythingMoe", category: "Anime Downloading", link: "https://everythingmoe.com", description: "Anime Download Index, Subreddit, Discord", index: true },
+            { name: "AnimeKaizoku", category: "Anime Downloading", link: "https://animekaizoku.com", description: "Anime Downloads" },
+            { name: "Nyaa", category: "Anime Downloading", link: "https://nyaa.si", description: "Anime Downloads" },
+            { name: "AnimeTosho", category: "Anime Downloading", link: "https://animetosho.org", description: "Anime Downloads" },
+            { name: "AnimeBytes", category: "Anime Downloading", link: "https://animebytes.tv", description: "Anime Downloads" },
+            { name: "ShanaProject", category: "Anime Downloading", link: "https://shanaproject.com", description: "Anime Downloads" },
+            { name: "TokyoTosho", category: "Anime Downloading", link: "https://tokyotosho.info", description: "Anime Downloads" },
+            { name: "AniRena", category: "Anime Downloading", link: "https://anirena.com", description: "Anime Downloads" },
+            { name: "AnimeOut", category: "Anime Downloading", link: "https://animeout.xyz", description: "Anime Downloads" },
+            { name: "Hi10Anime", category: "Anime Downloading", link: "https://hi10anime.com", description: "Anime Downloads" },
+            { name: "AnimeKayo", category: "Anime Downloading", link: "https://animekayo.com", description: "Anime Downloads" },
+            { name: "DeadFish", category: "Anime Downloading", link: "https://deadfish.me", description: "Anime Downloads" },
+            { name: "SubsPlease", category: "Anime Downloading", link: "https://subsplease.org", description: "Anime Downloads" },
+            { name: "HorribleSubs", category: "Anime Downloading", link: "https://horriblesubs.info", description: "Anime Downloads" },
+            { name: "Anidex", category: "Anime Downloading", link: "https://anidex.info", description: "Anime Downloads" },
+            { name: "A-KO", category: "Anime Downloading", link: "https://a-ko.net", description: "Anime Downloads" },
+            { name: "Bakabt", category: "Anime Downloading", link: "https://bakabt.me", description: "Anime Downloads" },
+            { name: "Anime-Sharing", category: "Anime Downloading", link: "https://anime-sharing.com", description: "Anime Downloads" },
+            { name: "AnimeRG", category: "Anime Downloading", link: "https://animerg.me", description: "Anime Downloads" },
+            { name: "Erairaws", category: "Anime Downloading", link: "https://erairaws.com", description: "Anime Downloads" },
+            { name: "Underwater", category: "Anime Downloading", link: "https://underwater.rip", description: "Anime Downloads" },
+            { name: "Doki", category: "Anime Downloading", link: "https://doki.co", description: "Anime Downloads" },
+            { name: "Chihiro", category: "Anime Downloading", link: "https://chihiro-subs.com", description: "Anime Downloads" },
+            { name: "FFF", category: "Anime Downloading", link: "https://fffansubs.org", description: "Anime Downloads" },
+            { name: "Asenshi", category: "Anime Downloading", link: "https://asenshi.moe", description: "Anime Downloads" },
+            { name: "Commie", category: "Anime Downloading", link: "https://commiesubs.com", description: "Anime Downloads" },
+            { name: "Vivid", category: "Anime Downloading", link: "https://vivid.moe", description: "Anime Downloads" },
+            { name: "Eve", category: "Anime Downloading", link: "https://eve.moe", description: "Anime Downloads" },
+            { name: "DameDesuYo", category: "Anime Downloading", link: "https://damedesuyo.com", description: "Anime Downloads" },
+            { name: "Aka", category: "Anime Downloading", link: "https://aka-subs.com", description: "Anime Downloads" },
+            { name: "GJM", category: "Anime Downloading", link: "https://gjm-subs.com", description: "Anime Downloads" },
+            { name: "Saizen", category: "Anime Downloading", link: "https://saizen.me", description: "Anime Downloads" },
+            { name: "LostYears", category: "Anime Downloading", link: "https://lostyears.org", description: "Anime Downloads" },
+            { name: "Kaitou", category: "Anime Downloading", link: "https://kaitou-subs.com", description: "Anime Downloads" },
+            { name: "GoodJobMedia", category: " anime Downloading", link: "https://goodjobmedia.com", description: "Anime Downloads" },
+            // Educational Downloading
+            { name: "Z-Library", category: "Educational Downloading", link: "https://z-lib.is", description: "Books, Videos, Articles" },
+            { name: "GetFreeCourses", category: "Educational Downloading", link: "https://getfreecourses.co", description: "Educational Content" },
+            { name: "FreeTutorialsEU", category: "Educational Downloading", link: "https://freetutorialseu.com", description: "Educational Content" },
+            { name: "CourseHero", category: "Educational Downloading", link: "https://coursehero.com", description: "Educational Content" },
+            { name: "StudyDrive", category: "Educational Downloading", link: "https://studydrive.net", description: "Educational Content" },
+            { name: "FreeCourseSite", category: "Educational Downloading", link: "https://freecoursesite.com", description: "Educational Content" },
+            { name: "TutorialBar", category: "Educational Downloading", link: "https://tutorialbar.com", description: "Educational Content" },
+            { name: "UdemyFreeCourses", category: "Educational Downloading", link: "https://udemyfreecourses.org", description: "Educational Content" },
+            { name: "FreeTutorialsUs", category: "Educational Downloading", link: "https://freetutorialsus.com", description: "Educational Content" },
+            { name: "OnlineCoursesFree", category: "Educational Downloading", link: "https://onlinecoursesfree.com", description: "Educational Content" },
+            { name: "FreeEduCourses", category: "Educational Downloading", link: "https://freeeducourses.com", description: "Educational Content" },
+            { name: "Downloadly", category: "Educational Downloading", link: "https://downloadly.net", description: "Educational Content" },
+            { name: "GFxtra", category: "Educational Downloading", link: "https://gfxtra.com", description: "Educational Content" },
+            { name: "FreeW3Schools", category: "Educational Downloading", link: "https://freew3schools.com", description: "Educational Content" },
+            { name: "FreeCodeCamp", category: "Educational Downloading", link: "https://freecodecamp.org", description: "Educational Content" },
+            { name: "TheOdinProject", category: "Educational Downloading", link: "https://theodinproject.com", description: "Educational Content" },
+            { name: "KhanAcademyDownloads", category: "Educational Downloading", link: "https://khanacademy.org", description: "Educational Content" },
+            { name: "OpenCultureDownloads", category: "Educational Downloading", link: "https://openculture.com", description: "Educational Content" },
+            { name: "ArchiveEdu", category: "Educational Downloading", link: "https://archive.org", description: "Educational Content" },
+            { name: "MVGroup", category: "Educational Downloading", link: "https://mvgroup.org", description: "Documentaries, Educational Content" },
+            { name: "DocuWiki", category: "Educational Downloading", link: "https://docuwiki.net", description: "Documentaries, Educational Content" },
+            { name: "DocumentaryHeaven", category: "Educational Downloading", link: "https://documentaryheaven.com", description: "Documentaries, Educational Content" },
+            { name: "TopDocumentaryFilms", category: "Educational Downloading", link: "https://topdocumentaryfilms.com", description: "Documentaries, Educational Content" },
+            { name: "SproutVideo", category: "Educational Downloading", link: "https://sproutvideo.com", description: "Documentaries, Educational Content" },
+            { name: "DocumentaryStorm", category: "Educational Downloading", link: "https://documentarystorm.com", description: "Documentaries, Educational Content" },
+            { name: "DocumentaryMania", category: "Educational Downloading", link: "https://documentarymania.org", description: "Documentaries, Educational Content" },
+            { name: "DocuBay", category: "Educational Downloading", link: "https://docubay.com", description: "Documentaries, Educational Content" },
+            { name: "CuriosityStreamFree", category: "Educational Downloading", link: "https://curiositystream.com", description: "Documentaries, Educational Content" },
+            // Torrent Sites
+            { name: "Stremio", category: "Torrent Sites", link: "https://stremio.com", description: "Torrent Streaming App, Tools, Subreddit", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Prowlarr", category: "Torrent Sites", link: "https://prowlarr.com", description: "Automated Torrent Downloads", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Radarr", category: "Torrent Sites", link: "https://radarr.video", description: "Automated Movie Torrent Downloads, Auto-Subtitles", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Sonarr", category: "Torrent Sites", link: "https://sonarr.tv", description: "Automated TV Show Torrent Downloads, Auto-Subtitles", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Jackett", category: "Torrent Sites", link: "https://jackett.net", description: "Torrent Indexer", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "1337x", category: "Torrent Sites", link: "https://1337x.to", description: "Movies, TV Shows, Anime, Games", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "RARBG", category: "Torrent Sites", link: "https://rarbg.to", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "YTS", category: "Torrent Sites", link: "https://yts.mx", description: "Movies", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "LimeTorrents", category: "Torrent Sites", link: "https://limetorrents.to", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Torrentz2", category: "Torrent Sites", link: "https://torrentz2.is", description: "Torrent Search Engine", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "EZTV", category: "Torrent Sites", link: "https://eztv.re", description: "TV Shows", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Zooqle", category: "Torrent Sites", link: "https://zooqle.com", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "TorrentDownloads", category: "Torrent Sites", link: "https://torrentdownloads.me", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Torlock", category: "Torrent Sites", link: "https://torlock.com", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Glodls", category: "Torrent Sites", link: "https://glodls.to", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "MagnetDL", category: "Torrent Sites", link: "https://magnetdl.com", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "TorrentFunk", category: "Torrent Sites", link: "https://torrentfunk.com", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "YourBittorrent", category: "Torrent Sites", link: "https://yourbittorrent.com", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "BitTorrent", category: "Torrent Sites", link: "https://bittorrent.com", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "iDope", category: "Torrent Sites", link: "https://idope.se", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "SkyTorrents", category: "Torrent Sites", link: "https://skytorrents.to", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Demonoid", category: "Torrent Sites", link: "https://demonoid.is", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "ExtraTorrent", category: "Torrent Sites", link: "https://extratorrent.st", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Pirateiro", category: "Torrent Sites", link: "https://pirateiro.com", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "BTDB", category: "Torrent Sites", link: "https://btdb.to", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "DirtyTorrents", category: "Torrent Sites", link: "https://dirtytorrents.com", description: "Movies, TV Shows, Anime", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Torrends", category: "Torrent Sites", link: "https://torrends.to", description: "Torrent Search Engine", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Snowfl", category: "Torrent Sites", link: "https://snowfl.com", description: "Torrent Search Engine", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Veoble", category: "Torrent Sites", link: "https://veoble.com", description: "Torrent Search Engine", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "XtorX", category: "Torrent Sites", link: "https://xtorx.com", description: "Torrent Search Engine", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "BitSearch", category: "Torrent Sites", link: "https://bitsearch.to", description: "Torrent Search Engine", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "SolidTorrents", category: "Torrent Sites", link: "https://solidtorrents.to", description: "Torrent Search Engine", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Knaben", category: "Torrent Sites", link: "https://knaben.cc", description: "Torrent Search Engine", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "RuTracker", category: "Torrent Sites", link: "https://rutracker.org", description: "Movies, TV Shows, Anime, Russian Content", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "FileList", category: "Torrent Sites", link: "https://filelist.io", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "IPTorrents", category: "Torrent Sites", link: "https://iptorrents.com", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "TorrentLeech", category: "Torrent Sites", link: "https://torrentleech.org", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "AlphaRatio", category: "Torrent Sites", link: "https://alpharatio.cc", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "BeyondHD", category: "Torrent Sites", link: "https://beyond-hd.me", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "HDBits", category: "Torrent Sites", link: "https://hdbits.org", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Redacted", category: "Torrent Sites", link: "https://redacted.ch", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "MyAnonamouse", category: "Torrent Sites", link: "https://myanonamouse.net", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Bibliotik", category: "Torrent Sites", link: "https://bibliotik.me", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "GazelleGames", category: "Torrent Sites", link: "https://gazellegames.net", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "BitMeTV", category: "Torrent Sites", link: "https://bitmetv.org", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "SceneHD", category: "Torrent Sites", link: "https://scenehd.org", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "PassThePopcorn", category: "Torrent Sites", link: "https://passthepopcorn.me", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "BTN", category: "Torrent Sites", link: "https://broadcasthe.net", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "CGPersia", category: "Torrent Sites", link: "https://cgpersia.com", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Orpheus", category: "Torrent Sites", link: "https://orpheus.network", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "MoreThanTV", category: "Torrent Sites", link: "https://morethantv.me", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "TVChaosUK", category: "Torrent Sites", link: "https://tvchaosuk.com", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "BitSpyder", category: "Torrent Sites", link: "https://bitspyder.net", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "TV-Vault", category: "Torrent Sites", link: "https://tv-vault.me", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "TheVault", category: "Torrent Sites", link: "https://thevault.click", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "HDSpace", category: "Torrent Sites", link: "https://hd-space.org", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "HD-Torrents", category: "Torrent Sites", link: "https://hd-torrents.org", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Empornium", category: "Torrent Sites", link: "https://empornium.me", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "XSpeeds", category: "Torrent Sites", link: "https://xspeeds.eu", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "BitGamer", category: "Torrent Sites", link: "https://bitgamer.ch", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "PrivateHD", category: "Torrent Sites", link: "https://privatehd.to", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "UHDBits", category: "Torrent Sites", link: "https://uhdbits.org", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Blutopia", category: "Torrent Sites", link: "https://blutopia.xyz", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "HD4Free", category: "Torrent Sites", link: "https://hd4free.xyz", description: "Movies, TV Shows, Anime, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "BakaBT", category: "Torrent Sites", link: "https://bakabt.me", description: "Anime Torrents, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "AnimeBytes", category: "Torrent Sites", link: "https://animebytes.tv", description: "Anime Torrents, Invite Only", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Nyaa", category: "Torrent Sites", link: "https://nyaa.si", description: "Anime Torrents", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "TokyoTosho", category: "Torrent Sites", link: "https://tokyotosho.info", description: "Anime Torrents", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Anidex", category: "Torrent Sites", link: "https://anidex.info", description: "Anime Torrents", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "ShanaProject", category: "Torrent Sites", link: "https://shanaproject.com", description: "Anime Torrents", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "AniRena", category: "Torrent Sites", link: "https://anirena.com", description: "Anime Torrents", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Subsad", category: "Torrent Sites", link: "https://subsad.com", description: "Anime Subtitle Torrents", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "PopcornTime", category: "Torrent Sites", link: "https://popcorntime.app", description: "Torrent Streaming App", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "WebTor", category: "Torrent Sites", link: "https://webtor.io", description: "Online Torrent Streaming", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Seedr", category: "Torrent Sites", link: "https://seedr.cc", description: "Torrent to Direct Link", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "ZbigZ", category: "Torrent Sites", link: "https://zbigz.com", description: "Torrent to Direct Link", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Bitport", category: "Torrent Sites", link: "https://bitport.io", description: "Torrent to Direct Link", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Offcloud", category: "Torrent Sites", link: "https://offcloud.com", description: "Torrent to Direct Link", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Put.io", category: "Torrent Sites", link: "https://put.io", description: "Torrent to Direct Link", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "TransferCloud", category: "Torrent Sites", link: "https://transfercloud.io", description: "Torrent to Direct Link", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Boxopus", category: "Torrent Sites", link: "https://boxopus.com", description: "Torrent to Direct Link", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "FileStream", category: "Torrent Sites", link: "https://filestream.me", description: "Torrent to Direct Link", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "Direct-Torrents", category: "Torrent Sites", link: "https://direct-torrents.com", description: "Torrent to Direct Link", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "TorBox", category: "Torrent Sites", link: "https://torbox.app", description: "Torrent to Direct Link", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "GetTorrent", category: "Torrent Sites", link: "https://gettorrent.com", description: "Torrent to Direct Link", warning: "Warning: Use only for legal torrents and with a VPN." },
+            { name: "CloudTorrents", category: "Torrent Sites", link: "https://cloudtorrents.com", description: "Torrent to Direct Link", warning: "Warning: Use only for legal torrents and with a VPN." }
+        ];
+
+        function displayResources(filteredResources) {
+            const resourceList = document.getElementById('resource-list');
+            resourceList.innerHTML = '';
+
+            filteredResources.forEach(resource => {
+                const card = document.createElement('div');
+                card.classList.add('resource-card');
+
+                let title = resource.name;
+                if (resource.starred) title = `<span class="starred">★</span> ${title}`;
+                if (resource.index) title = `<span class="index">📚</span> ${title}`;
+
+                card.innerHTML = `
+                    <h3>${title}</h3>
+                    <p>${resource.description}</p>
+                    <a href="${resource.link}" target="_blank">Visit Site</a>
+                    ${resource.warning ? `<p class="warning">${resource.warning}</p>` : ''}
+                `;
+                resourceList.appendChild(card);
+            });
+        }
+
+        displayResources(resources);
+
+        document.getElementById('filter-btn').addEventListener('click', () => {
+            const selectedCategory = document.getElementById('category').value;
+            if (selectedCategory === 'all') {
+                displayResources(resources);
+            } else {
+                const filtered = resources.filter(resource => resource.category === selectedCategory);
+                displayResources(filtered);
+            }
+        });
+    </script>
+</body>
+</html>

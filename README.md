@@ -1,3 +1,4 @@
+[![DevSponsors](https://devsponsors.github.io/assets/badges/sponsor.svg)](https://devsponsors.github.io)
 Hello to you who are reading this code
 I hope you are doing great
 This code is only for introducing and linking to free download and viewing sites
